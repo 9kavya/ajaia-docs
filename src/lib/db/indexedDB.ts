@@ -155,3 +155,4 @@ class LocalIndexedDB {
 }
 
 export const localIndexedDB = new LocalIndexedDB();
+

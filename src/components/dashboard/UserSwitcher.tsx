@@ -30,7 +30,10 @@ export function UserSwitcher() {
         <img
           src={currentUser.avatar}
           alt={currentUser.name}
-          className="w-6 h-6 rounded-full object-cover ring-1 ring-blue-500"
+          width={24}
+          height={24}
+          style={{ width: '24px', height: '24px', maxWidth: '24px', maxHeight: '24px' }}
+          className="w-6 h-6 rounded-full object-cover ring-1 ring-blue-500 shrink-0"
         />
         <div className="flex flex-col items-start text-xs leading-none">
           <span className="font-semibold text-gray-900">{currentUser.name}</span>
@@ -71,7 +74,10 @@ export function UserSwitcher() {
                     <img
                       src={user.avatar}
                       alt={user.name}
-                      className="w-8 h-8 rounded-full object-cover border border-gray-200"
+                      width={32}
+                      height={32}
+                      style={{ width: '32px', height: '32px', maxWidth: '32px', maxHeight: '32px' }}
+                      className="w-8 h-8 rounded-full object-cover border border-gray-200 shrink-0"
                     />
                     <div>
                       <div className="text-xs font-semibold text-gray-900">{user.name}</div>

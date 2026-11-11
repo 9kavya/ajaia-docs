@@ -16,3 +16,4 @@ describe('IndexedDB Client Store', () => {
     expect(typeof localIndexedDB.syncDocuments).toBe('function');
   });
 });
+
