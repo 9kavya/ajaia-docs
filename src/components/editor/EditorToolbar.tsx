@@ -44,24 +44,63 @@ export function EditorToolbar({ editor, readOnly = false }: EditorToolbarProps) 
 
     setIsImporting(true);
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('mode', 'parseOnly');
+      let content = '';
+      let serverSuccess = false;
 
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
+      // 1. Attempt server-side parse
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('mode', 'parseOnly');
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to parse file');
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
 
-      if (data.content) {
-        editor.chain().focus().insertContent(data.content).run();
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const data = await res.json();
+          if (res.ok && data.content) {
+            content = data.content;
+            serverSuccess = true;
+          }
+        }
+      } catch (serverErr) {
+        console.warn('Server parse failed, falling back to client parse:', serverErr);
+      }
+
+      // 2. Client-side fallback if server returned error or non-JSON
+      if (!serverSuccess || !content) {
+        const text = await file.text();
+        const ext = file.name.split('.').pop()?.toLowerCase();
+        if (ext === 'md' || ext === 'markdown') {
+          // Simple client markdown parser
+          content = text
+            .split(/\r?\n/)
+            .map((line) => {
+              if (line.startsWith('# ')) return `<h1>${line.slice(2)}</h1>`;
+              if (line.startsWith('## ')) return `<h2>${line.slice(3)}</h2>`;
+              if (line.startsWith('### ')) return `<h3>${line.slice(4)}</h3>`;
+              if (line.startsWith('- ')) return `<li>${line.slice(2)}</li>`;
+              if (!line.trim()) return '<p></p>';
+              return `<p>${line}</p>`;
+            })
+            .join('');
+        } else {
+          content = text
+            .split(/\r?\n/)
+            .map((line) => `<p>${line || '<br>'}</p>`)
+            .join('');
+        }
+      }
+
+      if (content) {
+        editor.chain().focus().insertContent(content).run();
         showToast(`Imported content from "${file.name}" into document`, 'success');
       }
     } catch (err: any) {
-      showToast(err.message, 'error');
+      showToast(err.message || 'Failed to import file', 'error');
     } finally {
       setIsImporting(false);
       if (fileInputRef.current) fileInputRef.current.value = '';

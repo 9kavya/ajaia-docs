@@ -3,6 +3,9 @@
 import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/lib/context/UserContext';
+import { localIndexedDB } from '@/lib/db/indexedDB';
+import { Document } from '@/lib/db/types';
+import { parseMarkdownToHtml, parsePlainTextToHtml } from '@/lib/parser/fileParser';
 import {
   UploadCloud,
   X,
@@ -74,25 +77,89 @@ export function FileUploadModal({ isOpen, onClose }: FileUploadModalProps) {
 
     setIsUploading(true);
     try {
-      const formData = new FormData();
-      formData.append('file', selectedFile);
-      formData.append('userId', currentUser.id);
+      const activeUserId = currentUser?.id || 'usr_alex';
+      let serverSuccess = false;
+      let newDocument: Document | null = null;
 
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
+      // 1. Attempt server-side upload & conversion
+      try {
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        formData.append('userId', activeUserId);
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to upload and parse file');
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const data = await res.json();
+          if (res.ok && data?.document) {
+            newDocument = data.document;
+            serverSuccess = true;
+          }
+        }
+      } catch (serverErr) {
+        console.warn('Server upload request failed, falling back to client parser:', serverErr);
       }
 
-      showToast(`Imported "${data.document.title}" successfully!`, 'success');
+      // 2. Client-side fallback if server is offline or returned non-JSON
+      if (!serverSuccess || !newDocument) {
+        const ext = selectedFile.name.split('.').pop()?.toLowerCase() || '';
+        let content = '<p></p>';
+        let title = selectedFile.name.replace(/\.[^/.]+$/, '');
+
+        if (ext === 'md' || ext === 'markdown') {
+          const text = await selectedFile.text();
+          content = parseMarkdownToHtml(text);
+        } else if (ext === 'txt') {
+          const text = await selectedFile.text();
+          content = parsePlainTextToHtml(text);
+        } else if (ext === 'json') {
+          const text = await selectedFile.text();
+          try {
+            const parsed = JSON.parse(text);
+            title = parsed.title || title;
+            content = parsed.content || `<p>${text}</p>`;
+          } catch {
+            content = `<p>${text}</p>`;
+          }
+        } else {
+          throw new Error('Unsupported or unparseable file format. Please upload .md, .txt, or .docx.');
+        }
+
+        const now = new Date().toISOString();
+        newDocument = {
+          id: 'doc_' + Math.random().toString(36).substring(2, 9) + '_' + Date.now().toString(36),
+          title: title || 'Untitled Document',
+          content,
+          plainTextPreview: content.replace(/<[^>]*>/g, ' ').slice(0, 140),
+          ownerId: activeUserId,
+          ownerName: currentUser?.name || 'Alex Rivera',
+          ownerEmail: currentUser?.email || 'alex@ajaia.io',
+          collaborators: [],
+          attachments: [],
+          createdAt: now,
+          updatedAt: now,
+          lastEditedBy: {
+            userId: activeUserId,
+            name: currentUser?.name || 'Alex Rivera',
+          },
+        };
+      }
+
+      // 3. Persist to browser IndexedDB
+      if (localIndexedDB.isSupported() && newDocument) {
+        await localIndexedDB.saveDocument(newDocument);
+      }
+
+      showToast(`Imported "${newDocument.title}" successfully!`, 'success');
       onClose();
-      router.push(`/document/${data.document.id}`);
+      router.push(`/document/${newDocument.id}`);
     } catch (err: any) {
-      showToast(err.message, 'error');
+      showToast(err.message || 'Failed to import document', 'error');
+    } finally {
       setIsUploading(false);
     }
   };
