@@ -19,13 +19,14 @@
 ---
 
 ## 👥 Seeded Personas / Reviewer Credentials
-No manual user registration or password entry is required. Use the **Simulated Persona Switcher** dropdown in the navigation bar to switch between personas instantly:
+Reviewers can log in with standard email/password or use the **Quick Login** buttons on the login page:
 
-| Persona | Role | Email | Initial Ownership & Permissions |
-| :--- | :--- | :--- | :--- |
-| **Alex Rivera** | Product Lead | `alex@ajaia.io` | Owner of *"Ajaia Product Roadmap & Vision 2027"*; Editor on Sarah's RFC. |
-| **Sarah Chen** | Engineering Lead | `sarah@ajaia.io` | Owner of *"RFC 042: High Performance Storage"*; Editor on Alex's roadmap. |
-| **Marcus Vance** | Design Lead | `marcus@ajaia.io` | Owner of *"Design System Guidelines"*; Viewer on Alex's roadmap. |
+| Persona | Role | Email | Password | Initial Ownership & Permissions |
+| :--- | :--- | :--- | :--- | :--- |
+| **Alex Rivera** | Product Lead | `alex@ajaia.io` | `alex123` | Owner of *"Ajaia Product Roadmap & Vision 2027"*; Editor on Sarah's RFC. |
+| **Sarah Chen** | Engineering Lead | `sarah@ajaia.io` | `sarah123` | Owner of *"RFC 042: High Performance Storage"*; Editor on Alex's roadmap. |
+| **Marcus Vance** | Design Lead | `marcus@ajaia.io` | `marcus123` | Owner of *"Design System Guidelines"*; Viewer on Alex's roadmap. |
+| **Kavya Reddy** | Content Strategist | `kavya@ajaia.io` | `kavya123` | Teammate persona for testing new collaborator invites & unauthorized doc states. |
 
 ---
 

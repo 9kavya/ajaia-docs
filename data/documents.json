@@ -572,5 +572,167 @@
       "userId": "usr_sarah",
       "name": "Sarah Chen"
     }
+  },
+  {
+    "id": "doc_gbr109p_mwc74buc",
+    "title": "Permissions Test Doc",
+    "content": "<p>Test content</p>",
+    "plainTextPreview": "Test content",
+    "ownerId": "usr_alex",
+    "ownerName": "Alex Rivera",
+    "ownerEmail": "alex@ajaia.io",
+    "collaborators": [],
+    "attachments": [],
+    "createdAt": "2026-11-11T14:09:58.260Z",
+    "updatedAt": "2026-11-11T14:09:58.260Z",
+    "lastEditedBy": {
+      "userId": "usr_alex",
+      "name": "Alex Rivera"
+    }
+  },
+  {
+    "id": "doc_h6q1wt1_mwc74bug",
+    "title": "Shared Collab Doc",
+    "content": "<p>Shared body</p>",
+    "plainTextPreview": "Shared body",
+    "ownerId": "usr_alex",
+    "ownerName": "Alex Rivera",
+    "ownerEmail": "alex@ajaia.io",
+    "collaborators": [
+      {
+        "userId": "usr_sarah",
+        "email": "sarah@ajaia.io",
+        "name": "Sarah Chen",
+        "role": "editor",
+        "addedAt": "2026-11-11T14:09:58.266Z"
+      },
+      {
+        "userId": "usr_marcus",
+        "email": "marcus@ajaia.io",
+        "name": "Marcus Vance",
+        "role": "viewer",
+        "addedAt": "2026-11-11T14:09:58.268Z"
+      }
+    ],
+    "attachments": [],
+    "createdAt": "2026-11-11T14:09:58.264Z",
+    "updatedAt": "2026-11-11T14:09:58.268Z",
+    "lastEditedBy": {
+      "userId": "usr_alex",
+      "name": "Alex Rivera"
+    }
+  },
+  {
+    "id": "doc_fs8jb1m_mwc74bum",
+    "title": "Editable Test",
+    "content": "<p>Sarah edited this</p>",
+    "plainTextPreview": "Sarah edited this",
+    "ownerId": "usr_alex",
+    "ownerName": "Alex Rivera",
+    "ownerEmail": "alex@ajaia.io",
+    "collaborators": [
+      {
+        "userId": "usr_sarah",
+        "email": "sarah@ajaia.io",
+        "name": "Sarah Chen",
+        "role": "editor",
+        "addedAt": "2026-11-11T14:09:58.271Z"
+      },
+      {
+        "userId": "usr_marcus",
+        "email": "marcus@ajaia.io",
+        "name": "Marcus Vance",
+        "role": "viewer",
+        "addedAt": "2026-11-11T14:09:58.273Z"
+      }
+    ],
+    "attachments": [],
+    "createdAt": "2026-11-11T14:09:58.270Z",
+    "updatedAt": "2026-11-11T14:09:58.275Z",
+    "lastEditedBy": {
+      "userId": "usr_sarah",
+      "name": "Sarah Chen"
+    }
+  },
+  {
+    "id": "doc_0jqsol2_mwc75x4a",
+    "title": "Permissions Test Doc",
+    "content": "<p>Test content</p>",
+    "plainTextPreview": "Test content",
+    "ownerId": "usr_alex",
+    "ownerName": "Alex Rivera",
+    "ownerEmail": "alex@ajaia.io",
+    "collaborators": [],
+    "attachments": [],
+    "createdAt": "2026-11-11T14:11:12.490Z",
+    "updatedAt": "2026-11-11T14:11:12.490Z",
+    "lastEditedBy": {
+      "userId": "usr_alex",
+      "name": "Alex Rivera"
+    }
+  },
+  {
+    "id": "doc_yd0ke9x_mwc75x4d",
+    "title": "Shared Collab Doc",
+    "content": "<p>Shared body</p>",
+    "plainTextPreview": "Shared body",
+    "ownerId": "usr_alex",
+    "ownerName": "Alex Rivera",
+    "ownerEmail": "alex@ajaia.io",
+    "collaborators": [
+      {
+        "userId": "usr_sarah",
+        "email": "sarah@ajaia.io",
+        "name": "Sarah Chen",
+        "role": "editor",
+        "addedAt": "2026-11-11T14:11:12.494Z"
+      },
+      {
+        "userId": "usr_marcus",
+        "email": "marcus@ajaia.io",
+        "name": "Marcus Vance",
+        "role": "viewer",
+        "addedAt": "2026-11-11T14:11:12.495Z"
+      }
+    ],
+    "attachments": [],
+    "createdAt": "2026-11-11T14:11:12.493Z",
+    "updatedAt": "2026-11-11T14:11:12.495Z",
+    "lastEditedBy": {
+      "userId": "usr_alex",
+      "name": "Alex Rivera"
+    }
+  },
+  {
+    "id": "doc_43k22l0_mwc75x4h",
+    "title": "Editable Test",
+    "content": "<p>Sarah edited this</p>",
+    "plainTextPreview": "Sarah edited this",
+    "ownerId": "usr_alex",
+    "ownerName": "Alex Rivera",
+    "ownerEmail": "alex@ajaia.io",
+    "collaborators": [
+      {
+        "userId": "usr_sarah",
+        "email": "sarah@ajaia.io",
+        "name": "Sarah Chen",
+        "role": "editor",
+        "addedAt": "2026-11-11T14:11:12.498Z"
+      },
+      {
+        "userId": "usr_marcus",
+        "email": "marcus@ajaia.io",
+        "name": "Marcus Vance",
+        "role": "viewer",
+        "addedAt": "2026-11-11T14:11:12.499Z"
+      }
+    ],
+    "attachments": [],
+    "createdAt": "2026-11-11T14:11:12.497Z",
+    "updatedAt": "2026-11-11T14:11:12.501Z",
+    "lastEditedBy": {
+      "userId": "usr_sarah",
+      "name": "Sarah Chen"
+    }
   }
 ]

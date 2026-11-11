@@ -33,6 +33,11 @@ This document outlines how AI tools and assistants were leveraged in the plannin
 3. **Rejection of Ephemeral `/tmp` SQLite on Serverless:**
    - AI initially suggested `better-sqlite3` with an embedded file. 
    - **Reason for Rejection:** On Node 25 on Windows and serverless Vercel runtimes, binary C++ bindings for sqlite3 frequently cause build errors or lose data on instance recycle. Instead, engineered an atomic JSON file store with an abstracted repository interface that works cross-platform with zero native dependencies.
+4. **Resolution of Windows OneDrive Reparse Point Crash:**
+   - When building Next.js on OneDrive-synced directories, Next.js's internal `recursive-delete.js` crashed with `EINVAL: invalid argument, readlink` due to NTFS reparse points.
+   - **Engineering Fix:** Implemented a targeted `scripts/patch-next.js` postinstall hook wrapping the readlink call in safe error-handling, alongside an automated build cache cleaner in `package.json`, ensuring deterministic builds across Windows and CI.
+5. **Architectural Addition of Dual-Layer IndexedDB Persistence:**
+   - AI initially proposed server-only persistence. We enhanced this with a client-side IndexedDB engine (`src/lib/db/indexedDB.ts`), ensuring offline-safe typing, zero data loss during network hiccups, and instant load times.
 
 ---
 
