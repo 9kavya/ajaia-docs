@@ -69,3 +69,4 @@
   > *AI accelerated TipTap boilerplate and AST regex generation by ~80%. We actively rejected AI suggestions for heavyweight vector embeddings and ephemeral /tmp SQLite databases that fail on serverless. Reliability, security invariants, and test coverage remained strictly engineer-guided.*
   >
   > *Thank you, and I look forward to your feedback!"*
+

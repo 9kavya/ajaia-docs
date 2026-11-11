@@ -108,3 +108,4 @@ describe('Document Store & Permissions', () => {
     expect(sarahShared.every((d) => d.ownerId !== sarah.id && d.collaborators.some((c) => c.userId === sarah.id))).toBe(true);
   });
 });
+

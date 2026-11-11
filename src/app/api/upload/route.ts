@@ -13,11 +13,24 @@ export async function POST(request: NextRequest) {
     }
 
     const filename = file.name;
+    const mode = formData.get('mode') as string | null;
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
     // Parse the file content according to its extension
     const parsed = await parseUploadedFile(filename, buffer);
+
+    if (mode === 'parseOnly') {
+      return NextResponse.json({
+        content: parsed.content,
+        title: parsed.title,
+        parsedMeta: {
+          originalName: filename,
+          fileType: parsed.fileType,
+          size: file.size,
+        },
+      });
+    }
 
     // Create a new document in the store
     const document = documentStore.createDocument({
@@ -45,3 +58,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+

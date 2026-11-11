@@ -77,3 +77,4 @@ export async function DELETE(request: NextRequest, { params }: Params) {
 
   return NextResponse.json({ success: true });
 }
+

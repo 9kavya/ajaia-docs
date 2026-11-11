@@ -77,3 +77,4 @@ No manual user registration or password entry is required. Use the **Simulated P
    - Text selection popover to add inline comments and `@mention` teammates.
 3. **Export Engine:**
    - One-click export to clean Markdown (`.md`), PDF, or HTML.
+

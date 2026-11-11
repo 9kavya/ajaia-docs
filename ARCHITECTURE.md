@@ -93,3 +93,4 @@ We incorporated automated unit and integration tests using **Vitest**:
 - **File Parsing Verification:** Validates markdown parsing, headings, task lists, and plain text formatting into TipTap HTML (`src/tests/parser.test.ts`).
 
 All tests run via `npm test` with 100% pass rate.
+

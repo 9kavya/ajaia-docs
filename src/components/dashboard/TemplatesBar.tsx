@@ -134,3 +134,4 @@ export function TemplatesBar({ onOpenUpload }: TemplatesBarProps) {
     </div>
   );
 }
+

@@ -21,7 +21,10 @@ import {
   Undo2,
   Redo2,
   RemoveFormatting,
+  FileUp,
+  Loader2,
 } from 'lucide-react';
+import { useUser } from '@/lib/context/UserContext';
 
 interface EditorToolbarProps {
   editor: Editor | null;
@@ -29,7 +32,41 @@ interface EditorToolbarProps {
 }
 
 export function EditorToolbar({ editor, readOnly = false }: EditorToolbarProps) {
+  const { showToast } = useUser();
+  const [isImporting, setIsImporting] = React.useState(false);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
   if (!editor) return null;
+
+  const handleImportFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || !e.target.files[0]) return;
+    const file = e.target.files[0];
+
+    setIsImporting(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('mode', 'parseOnly');
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to parse file');
+
+      if (data.content) {
+        editor.chain().focus().insertContent(data.content).run();
+        showToast(`Imported content from "${file.name}" into document`, 'success');
+      }
+    } catch (err: any) {
+      showToast(err.message, 'error');
+    } finally {
+      setIsImporting(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
 
   if (readOnly) {
     return (
@@ -299,7 +336,33 @@ export function EditorToolbar({ editor, readOnly = false }: EditorToolbarProps) 
         >
           <RemoveFormatting className="w-4 h-4" />
         </button>
+
+        <div className="h-4 w-[1px] bg-gray-200 mx-1" />
+
+        {/* Import file directly into cursor */}
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleImportFile}
+          accept=".md,.markdown,.txt,.docx"
+          className="hidden"
+        />
+        <button
+          type="button"
+          disabled={isImporting}
+          onClick={() => fileInputRef.current?.click()}
+          className="flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium text-indigo-700 bg-indigo-50 hover:bg-indigo-100 transition-colors disabled:opacity-50"
+          title="Import content from .md, .txt, or .docx file directly into this draft"
+        >
+          {isImporting ? (
+            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+          ) : (
+            <FileUp className="w-3.5 h-3.5" />
+          )}
+          <span className="hidden sm:inline">Import into draft</span>
+        </button>
       </div>
     </div>
   );
 }
+

@@ -131,3 +131,4 @@ export function DocumentCard({ document, onDelete, onShare }: DocumentCardProps)
     </div>
   );
 }
+

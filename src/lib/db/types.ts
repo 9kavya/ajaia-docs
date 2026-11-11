@@ -47,3 +47,4 @@ export interface Document {
 }
 
 export type DocumentFilter = 'all' | 'owned' | 'shared';
+

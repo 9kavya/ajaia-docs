@@ -144,3 +144,4 @@ npm start
 │   │   └── parser/             # Mammoth & Markdown AST parser
 │   └── tests/                  # Vitest permissions & parser test suites
 ```
+

@@ -43,3 +43,4 @@ describe('File Parser', () => {
     expect(html).toContain('<p>Second paragraph with multiple<br>lines inside.</p>');
   });
 });
+

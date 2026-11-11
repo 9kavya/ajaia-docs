@@ -15,3 +15,4 @@ Welcome to the **Ajaia Q1 Acceleration Plan**. This file was imported directly f
 - [ ] Add real-time cursor sync with Yjs WebSockets
 
 > *"The best productivity tools get out of your way and let teams focus on the work that matters."*
+

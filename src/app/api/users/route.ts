@@ -5,3 +5,4 @@ export async function GET() {
   const users = documentStore.getUsers();
   return NextResponse.json({ users });
 }
+

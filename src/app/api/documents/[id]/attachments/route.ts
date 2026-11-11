@@ -73,3 +73,4 @@ export async function DELETE(request: NextRequest, { params }: Params) {
     return NextResponse.json({ error: 'Failed to delete attachment' }, { status: 500 });
   }
 }
+
