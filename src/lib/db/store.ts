@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { Document, User, Collaborator, Attachment, Role, DocumentFilter } from './types';
+import { Document, User, Attachment, Role, DocumentFilter } from './types';
 
 export const SEEDED_USERS: User[] = [
   {

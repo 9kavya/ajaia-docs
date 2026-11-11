@@ -14,11 +14,8 @@ import {
   Search,
   Filter,
   Grid,
-  List as ListIcon,
-  Plus,
   UploadCloud,
   FolderOpen,
-  Sparkles,
   Database,
 } from 'lucide-react';
 

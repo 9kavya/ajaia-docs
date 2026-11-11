@@ -12,7 +12,6 @@ import {
   Lock,
   Edit3,
   Clock,
-  MoreVertical,
 } from 'lucide-react';
 
 interface DocumentCardProps {

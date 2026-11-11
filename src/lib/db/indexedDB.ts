@@ -1,4 +1,4 @@
-import { Document, Attachment } from './types';
+import { Document } from './types';
 
 const DB_NAME = 'AjaiaDocs_LocalDB';
 const DB_VERSION = 1;

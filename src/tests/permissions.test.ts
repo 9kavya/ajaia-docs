@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { documentStore, SEEDED_USERS } from '../lib/db/store';
 
 describe('Document Store & Permissions', () => {

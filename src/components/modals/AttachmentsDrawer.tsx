@@ -9,7 +9,6 @@ import {
   Upload,
   Download,
   Trash2,
-  File,
   FileText,
   Image,
   Loader2,

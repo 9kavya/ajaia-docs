@@ -8,10 +8,7 @@ import { UserSwitcher } from '../dashboard/UserSwitcher';
 import {
   FileText,
   ArrowLeft,
-  Cloud,
-  Check,
   Loader2,
-  Share2,
   Paperclip,
   Lock,
   Users,

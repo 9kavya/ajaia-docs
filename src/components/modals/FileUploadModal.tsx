@@ -5,9 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useUser } from '@/lib/context/UserContext';
 import {
   UploadCloud,
-  FileText,
   X,
-  FileCode,
   FileCheck,
   AlertCircle,
   Loader2,
