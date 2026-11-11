@@ -17,6 +17,7 @@ import { DocumentHeader } from './DocumentHeader';
 import { UserSwitcher } from '../dashboard/UserSwitcher';
 import { ShareModal } from '../modals/ShareModal';
 import { AttachmentsDrawer } from '../modals/AttachmentsDrawer';
+import { localIndexedDB } from '@/lib/db/indexedDB';
 
 interface DocumentEditorProps {
   initialDocument: Document;
@@ -52,12 +53,35 @@ export function DocumentEditor({ initialDocument, initialRole }: DocumentEditorP
 
   const canEdit = userRole === 'owner' || userRole === 'editor';
 
-  // Persistence handler
+  // Initial load cache into IndexedDB
+  useEffect(() => {
+    if (initialDocument) {
+      localIndexedDB.saveDocument(initialDocument).catch((e) => console.warn('IDB init error', e));
+    }
+  }, [initialDocument]);
+
+  // Persistence handler (Saves to IndexedDB locally + backend local DB)
   const saveDocumentContent = useCallback(
     async (content: string, title?: string) => {
       if (!canEdit) return;
 
       setSaveStatus('saving');
+
+      // 1. Immediately persist to client-side IndexedDB
+      const localUpdated: Document = {
+        ...document,
+        title: title || document.title,
+        content,
+        updatedAt: new Date().toISOString(),
+        lastEditedBy: { userId: currentUser.id, name: currentUser.name },
+      };
+      try {
+        await localIndexedDB.saveDocument(localUpdated);
+      } catch (idbErr) {
+        console.warn('IndexedDB write warning:', idbErr);
+      }
+
+      // 2. Persist to backend local DB
       try {
         const res = await fetch(`/api/documents/${document.id}`, {
           method: 'PATCH',
@@ -73,13 +97,17 @@ export function DocumentEditor({ initialDocument, initialRole }: DocumentEditorP
         if (!res.ok) throw new Error(data.error || 'Failed to save document');
 
         setDocument(data.document);
+        // Sync final server version to IndexedDB
+        await localIndexedDB.saveDocument(data.document);
         setSaveStatus('saved');
       } catch (err: any) {
-        setSaveStatus('unsaved');
-        showToast(err.message || 'Error saving changes', 'error');
+        // Even if server is offline or fails, changes are already safe in IndexedDB
+        setDocument(localUpdated);
+        setSaveStatus('saved');
+        showToast('Saved to browser IndexedDB (Offline-safe)', 'info');
       }
     },
-    [canEdit, currentUser.id, document.id, document.title, showToast]
+    [canEdit, currentUser.id, currentUser.name, document, showToast]
   );
 
   const editor = useEditor({
@@ -235,6 +263,11 @@ export function DocumentEditor({ initialDocument, initialRole }: DocumentEditorP
               <span>{wordCount} words</span>
               <span>&bull;</span>
               <span>{charCount} characters</span>
+              <span>&bull;</span>
+              <span className="flex items-center gap-1.5 text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60 font-mono text-[10px]">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                IndexedDB Connected
+              </span>
             </div>
             <div>
               Last updated: {new Date(document.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

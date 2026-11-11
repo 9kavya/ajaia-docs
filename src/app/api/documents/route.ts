@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { documentStore, SEEDED_USERS } from '@/lib/db/store';
 import { DocumentFilter } from '@/lib/db/types';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const userId = searchParams.get('userId') || SEEDED_USERS[0].id;

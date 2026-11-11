@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { parseUploadedFile } from '@/lib/parser/fileParser';
 import { documentStore, SEEDED_USERS } from '@/lib/db/store';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();

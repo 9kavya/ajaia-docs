@@ -15,6 +15,7 @@ import {
   Paperclip,
   Lock,
   Users,
+  Database,
 } from 'lucide-react';
 
 interface DocumentHeaderProps {
@@ -124,9 +125,11 @@ export function DocumentHeader({
               </span>
             )}
             {saveStatus === 'saved' && (
-              <span className="flex items-center gap-1 text-gray-500">
-                <Cloud className="w-3 h-3 text-emerald-600" />
-                <span>Saved to storage</span>
+              <span className="flex items-center gap-1.5 text-gray-500" title="Changes persisted locally in browser IndexedDB and storage">
+                <Database className="w-3 h-3 text-emerald-600" />
+                <span className="text-[11px] font-medium text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200/50">
+                  Saved to IndexedDB
+                </span>
               </span>
             )}
             {saveStatus === 'unsaved' && (

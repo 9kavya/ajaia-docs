@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import { documentStore, SEEDED_USERS } from '@/lib/db/store';
 import { DocumentEditor } from '@/components/editor/DocumentEditor';
 
+export const dynamic = 'force-dynamic';
+
 interface PageProps {
   params: {
     id: string;

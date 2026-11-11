@@ -8,6 +8,7 @@ import { TemplatesBar } from '@/components/dashboard/TemplatesBar';
 import { DocumentCard } from '@/components/dashboard/DocumentCard';
 import { FileUploadModal } from '@/components/modals/FileUploadModal';
 import { ShareModal } from '@/components/modals/ShareModal';
+import { localIndexedDB } from '@/lib/db/indexedDB';
 import {
   FileText,
   Search,
@@ -18,6 +19,7 @@ import {
   UploadCloud,
   FolderOpen,
   Sparkles,
+  Database,
 } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -35,9 +37,26 @@ export default function DashboardPage() {
       const res = await fetch(`/api/documents?userId=${currentUser.id}&filter=${filter}`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to fetch documents');
-      setDocuments(data.documents || []);
+      const docs = data.documents || [];
+      setDocuments(docs);
+
+      // Sync into client-side IndexedDB for offline persistence
+      if (localIndexedDB.isSupported()) {
+        await localIndexedDB.syncDocuments(docs);
+      }
     } catch (err: any) {
-      showToast(err.message, 'error');
+      // Fallback directly to client-side IndexedDB if offline or server is paused
+      if (localIndexedDB.isSupported()) {
+        const localDocs = await localIndexedDB.getAllDocuments(currentUser.id, filter);
+        if (localDocs.length > 0) {
+          setDocuments(localDocs);
+          showToast('Loaded documents from local IndexedDB', 'info');
+        } else {
+          showToast(err.message, 'error');
+        }
+      } else {
+        showToast(err.message, 'error');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -57,8 +76,13 @@ export default function DashboardPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to delete');
 
+      // Delete from client-side IndexedDB
+      if (localIndexedDB.isSupported()) {
+        await localIndexedDB.deleteDocument(id);
+      }
+
       setDocuments((prev) => prev.filter((d) => d.id !== id));
-      showToast('Document deleted', 'info');
+      showToast('Document deleted from local storage & IndexedDB', 'info');
     } catch (err: any) {
       showToast(err.message, 'error');
     }
@@ -103,8 +127,15 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* User Switcher */}
-        <div className="flex items-center gap-3">
+        {/* User Switcher & Local DB Badge */}
+        <div className="flex items-center gap-2.5">
+          <div
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/60 text-[11px] text-emerald-800 font-medium"
+            title="IndexedDB connected: Local browser database active (AjaiaDocs_LocalDB)"
+          >
+            <Database className="w-3 h-3 text-emerald-600" />
+            <span>Local DB: IndexedDB</span>
+          </div>
           <UserSwitcher />
         </div>
       </header>

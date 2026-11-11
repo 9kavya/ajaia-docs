@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { documentStore } from '@/lib/db/store';
 import { Attachment } from '@/lib/db/types';
 
+export const dynamic = 'force-dynamic';
+
 interface Params {
   params: {
     id: string;
