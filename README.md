@@ -42,13 +42,20 @@ An AI-native, lightweight collaborative document editor inspired by Google Docs,
   - Change collaborator roles between "Can edit" and "Can view".
   - One-click share link copy.
 
-### 4. Zero-Friction Persona Switcher
-Reviewers can test multi-user sharing and permissions in seconds without configuring OAuth or passwords:
-- **Alex Rivera** (`alex@ajaia.io`, Product Lead) — Default owner of initial docs.
-- **Sarah Chen** (`sarah@ajaia.io`, Engineering Lead) — Editor / Collaborator.
-- **Marcus Vance** (`marcus@ajaia.io`, Design Lead) — Viewer / External Collaborator.
+### 4. Login, Logout & Persona Switching
+- **Email + Password Login:** Standard login page with email/password fields, form validation, and error feedback.
+- **Session Persistence:** Login state saved in `localStorage` — survives page refresh and browser restart.
+- **Logout:** Click your avatar → "Log out" clears the session and redirects to login.
+- **Quick Login:** Demo accounts listed on the login page for fast reviewer access.
+- **Persona Switcher:** After logging in, switch between users instantly from the top-right avatar dropdown to test multi-user sharing and RBAC without re-entering credentials.
 
-Switching personas in the top right immediately updates access levels, dashboard filters, and editor read-only states in real time.
+**Demo Accounts:**
+| Name | Email | Password | Role |
+|---|---|---|---|
+| Alex Rivera | alex@ajaia.io | `alex123` | Product Lead |
+| Sarah Chen | sarah@ajaia.io | `sarah123` | Engineering Lead |
+| Marcus Vance | marcus@ajaia.io | `marcus123` | Design Lead |
+| Kavya Reddy | kavya@ajaia.io | `kavya123` | Content Strategist |
 
 ### 5. Persistence & Reliability
 - Atomic file-backed JSON store in `data/documents.json`.
@@ -103,17 +110,20 @@ npm start
 
 ## 🧪 Testing the Multi-User Sharing Flow
 
-1. Open [http://localhost:3000](http://localhost:3000) (logged in as **Alex Rivera** by default).
-2. Open the document **"Ajaia Product Roadmap & Vision 2027"** (owned by Alex). Notice the green **Owner** badge and full editing toolbar.
-3. Click the blue **Share** button. Notice Sarah is an **Editor** and Marcus is a **Viewer**.
-4. Use the persona switcher in the top right to switch to **Sarah Chen**.
+1. Open [http://localhost:3000](http://localhost:3000) — the **login page** appears.
+2. Log in as **Alex Rivera** (`alex@ajaia.io` / `alex123`), or click his name in the Quick Login section.
+3. Open the document **"Ajaia Product Roadmap & Vision 2027"** (owned by Alex). Notice the green **Owner** badge and full editing toolbar.
+4. Click the blue **Share** button. Notice Sarah is an **Editor** and Marcus is a **Viewer**.
+5. Use the **persona switcher** (top-right avatar) to switch to **Sarah Chen**.
    - Notice the role updates to **Editor**. Sarah can edit content and title.
-5. Use the persona switcher to switch to **Marcus Vance**.
-   - Notice the top shows an amber **View Only** badge and a notification banner: *"🔒 You are viewing this document in View-Only mode. Editing tools are disabled."*
+6. Switch to **Marcus Vance**.
+   - Notice the amber **View Only** badge and notification: *"🔒 You are viewing this document in View-Only mode."*
    - Marcus cannot edit the text or use toolbar controls.
-6. Return to the dashboard and switch filter tabs:
-   - Click **"Owned by me"** to see documents owned by the active persona.
-   - Click **"Shared with me"** to see documents shared by teammates.
+7. Switch to **Kavya Reddy** — she has no access to Alex's doc, demonstrating unauthorized access handling.
+8. Click **Log out** from the avatar dropdown → returns to the login page.
+9. Return to the dashboard and switch filter tabs:
+   - **"Owned by me"** — documents owned by the active persona.
+   - **"Shared with me"** — documents shared by teammates.
 
 ---
 
@@ -134,12 +144,13 @@ npm start
 │   │   ├── layout.tsx          # Root layout with UserProvider
 │   │   └── page.tsx            # Dashboard with templates & filters
 │   ├── components/
+│   │   ├── auth/              # LoginPage, AuthGate
 │   │   ├── dashboard/          # TemplatesBar, DocumentCard, UserSwitcher
 │   │   ├── editor/             # TipTap DocumentEditor, EditorToolbar, DocumentHeader
 │   │   ├── modals/             # ShareModal, FileUploadModal, AttachmentsDrawer
 │   │   └── ui/                 # ToastContainer
 │   ├── lib/
-│   │   ├── context/            # UserContext (persona switcher & toasts)
+│   │   ├── context/            # UserContext (auth, persona switcher & toasts)
 │   │   ├── db/                 # DocumentStore & Types
 │   │   └── parser/             # Mammoth & Markdown AST parser
 │   └── tests/                  # Vitest permissions & parser test suites

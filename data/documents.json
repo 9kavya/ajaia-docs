@@ -432,5 +432,64 @@
       "userId": "usr_sarah",
       "name": "Sarah Chen"
     }
+  },
+  {
+    "id": "doc_aq2in2p_mwc6lhkt",
+    "title": "TESTED DOCUMENT 1",
+    "content": "<p>                                                       TESTED D<strong><em><u>OCUMENT</u></em></strong><br><br>TESTED DOCUMENT</p><ul><li><p>Text 1: Introduction and overview of the project.  </p></li><li><p>Text 2: Key objectives and goals clearly defined.  </p></li><li><p>Text 3: Detailed methodology and approach explained.  </p></li><li><p>Text 4: Results, analysis, and findings summarized.  </p></li><li><p>Text 5: Conclusions and next steps outlined.<strong><em><u>texted 1</u></em></strong></p></li><li><p><strong><em><u>text 2</u></em></strong></p></li><li><p><strong><em><u>texetde 3</u></em></strong></p></li></ul>",
+    "plainTextPreview": "TESTED D OCUMENT TESTED DOCUMENT Text 1: Introduction and overview of the project. Text 2: Key objectives and goals clearly defined. Text 3:",
+    "ownerId": "usr_kavya",
+    "ownerName": "Kavya Reddy",
+    "ownerEmail": "kavya@ajaia.io",
+    "collaborators": [
+      {
+        "userId": "usr_ext_n6b2w",
+        "email": "kavyashreepelluru@gmail.com",
+        "name": "kavyashreepelluru",
+        "role": "viewer",
+        "addedAt": "2026-11-11T13:56:02.435Z"
+      }
+    ],
+    "attachments": [],
+    "createdAt": "2026-11-11T13:55:19.229Z",
+    "updatedAt": "2026-11-11T13:58:44.945Z",
+    "lastEditedBy": {
+      "userId": "usr_kavya",
+      "name": "Kavya Reddy"
+    }
+  },
+  {
+    "id": "doc_9iddxrd_mwc6q10i",
+    "title": "Meeting Notes",
+    "content": "<h1>Team Sync &amp; Meeting Notes</h1><p><strong>Date:</strong> 11/11/2026<br><strong>Attendees:</strong> Alex Rivera, Sarah Chen, Marcus Vance</p><h2>1. Agenda Topics</h2><ul><li><p>Quarterly roadmap sync and feature priority review</p></li><li><p>Collaborative rich-text editor architecture</p></li><li><p>File import (.md, .docx) validation</p></li></ul><h2>2. Key Decisions</h2><p>Agreed to ship core TipTap formatting and granular role-based sharing model.</p><h2>3. Action Items</h2><ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p></p></div></li></ul><ul><li><p>Complete deployment testing on Vercel</p></li><li><p>Record walkthrough demo video covering key flows</p></li></ul>",
+    "plainTextPreview": "Team Sync &amp; Meeting Notes Date: 11/11/2026 Attendees: Alex Rivera, Sarah Chen, Marcus Vance 1. Agenda Topics Quarterly roadmap sync and ",
+    "ownerId": "usr_kavya",
+    "ownerName": "Kavya Reddy",
+    "ownerEmail": "kavya@ajaia.io",
+    "collaborators": [],
+    "attachments": [],
+    "createdAt": "2026-11-11T13:58:51.042Z",
+    "updatedAt": "2026-11-11T13:58:52.264Z",
+    "lastEditedBy": {
+      "userId": "usr_kavya",
+      "name": "Kavya Reddy"
+    }
+  },
+  {
+    "id": "doc_wu82paf_mwc6qbf9",
+    "title": "Weekly Team Update",
+    "content": "<h1>Weekly Engineering &amp; Product Update</h1><p><strong>Week Ending:</strong> Friday</p><h2>🚀 Highlights &amp; Ships</h2><ul><li><p>Shipped document sharing with granular role enforcement</p></li><li><p>Implemented multi-file parser engine</p></li></ul><h2>🚧 Blockers &amp; Dependencies</h2><p>None at this time. All core systems functioning cleanly.</p><h2>🎯 Priorities for Next Week</h2><ul><li><p>Add CRDT multiplayer sync with Yjs</p></li><li><p>Add export to PDF / Markdown</p></li></ul>",
+    "plainTextPreview": "Weekly Engineering &amp; Product Update Week Ending: Friday 🚀 Highlights &amp; Ships Shipped document sharing with granular role enforcemen",
+    "ownerId": "usr_kavya",
+    "ownerName": "Kavya Reddy",
+    "ownerEmail": "kavya@ajaia.io",
+    "collaborators": [],
+    "attachments": [],
+    "createdAt": "2026-11-11T13:59:04.533Z",
+    "updatedAt": "2026-11-11T13:59:05.716Z",
+    "lastEditedBy": {
+      "userId": "usr_kavya",
+      "name": "Kavya Reddy"
+    }
   }
 ]
