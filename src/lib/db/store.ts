@@ -24,6 +24,13 @@ export const SEEDED_USERS: User[] = [
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
     roleDescription: 'Design Lead',
   },
+  {
+    id: 'usr_kavya',
+    name: 'Kavya Reddy',
+    email: 'kavya@ajaia.io',
+    avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=150&auto=format&fit=crop&q=80',
+    roleDescription: 'Content Strategist',
+  },
 ];
 
 const DATA_DIR = path.join(process.cwd(), 'data');

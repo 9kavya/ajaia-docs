@@ -351,5 +351,86 @@
       "userId": "usr_alex",
       "name": "Alex Rivera"
     }
+  },
+  {
+    "id": "doc_7gmx0o6_mwc6b1yu",
+    "title": "Permissions Test Doc",
+    "content": "<p>Test content</p>",
+    "plainTextPreview": "Test content",
+    "ownerId": "usr_alex",
+    "ownerName": "Alex Rivera",
+    "ownerEmail": "alex@ajaia.io",
+    "collaborators": [],
+    "attachments": [],
+    "createdAt": "2026-11-11T13:47:12.438Z",
+    "updatedAt": "2026-11-11T13:47:12.438Z",
+    "lastEditedBy": {
+      "userId": "usr_alex",
+      "name": "Alex Rivera"
+    }
+  },
+  {
+    "id": "doc_mfz0663_mwc6b1yx",
+    "title": "Shared Collab Doc",
+    "content": "<p>Shared body</p>",
+    "plainTextPreview": "Shared body",
+    "ownerId": "usr_alex",
+    "ownerName": "Alex Rivera",
+    "ownerEmail": "alex@ajaia.io",
+    "collaborators": [
+      {
+        "userId": "usr_sarah",
+        "email": "sarah@ajaia.io",
+        "name": "Sarah Chen",
+        "role": "editor",
+        "addedAt": "2026-11-11T13:47:12.442Z"
+      },
+      {
+        "userId": "usr_marcus",
+        "email": "marcus@ajaia.io",
+        "name": "Marcus Vance",
+        "role": "viewer",
+        "addedAt": "2026-11-11T13:47:12.444Z"
+      }
+    ],
+    "attachments": [],
+    "createdAt": "2026-11-11T13:47:12.441Z",
+    "updatedAt": "2026-11-11T13:47:12.444Z",
+    "lastEditedBy": {
+      "userId": "usr_alex",
+      "name": "Alex Rivera"
+    }
+  },
+  {
+    "id": "doc_5nax2qu_mwc6b1z2",
+    "title": "Editable Test",
+    "content": "<p>Sarah edited this</p>",
+    "plainTextPreview": "Sarah edited this",
+    "ownerId": "usr_alex",
+    "ownerName": "Alex Rivera",
+    "ownerEmail": "alex@ajaia.io",
+    "collaborators": [
+      {
+        "userId": "usr_sarah",
+        "email": "sarah@ajaia.io",
+        "name": "Sarah Chen",
+        "role": "editor",
+        "addedAt": "2026-11-11T13:47:12.448Z"
+      },
+      {
+        "userId": "usr_marcus",
+        "email": "marcus@ajaia.io",
+        "name": "Marcus Vance",
+        "role": "viewer",
+        "addedAt": "2026-11-11T13:47:12.449Z"
+      }
+    ],
+    "attachments": [],
+    "createdAt": "2026-11-11T13:47:12.446Z",
+    "updatedAt": "2026-11-11T13:47:12.451Z",
+    "lastEditedBy": {
+      "userId": "usr_sarah",
+      "name": "Sarah Chen"
+    }
   }
 ]
