@@ -2,10 +2,10 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useUser } from '@/lib/context/UserContext';
-import { ChevronDown, Check, UserCheck } from 'lucide-react';
+import { ChevronDown, Check, UserCheck, LogOut } from 'lucide-react';
 
 export function UserSwitcher() {
-  const { currentUser, users, switchUser } = useUser();
+  const { currentUser, users, switchUser, logout } = useUser() as any;
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -18,6 +18,8 @@ export function UserSwitcher() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  if (!currentUser) return null;
 
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
@@ -41,7 +43,7 @@ export function UserSwitcher() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-72 rounded-2xl bg-white shadow-2xl ring-1 ring-black/5 divide-y divide-gray-100 focus:outline-none z-50 animate-in fade-in-50 zoom-in-95">
+        <div className="absolute right-0 mt-2 w-72 rounded-2xl bg-white shadow-2xl ring-1 ring-black/5 divide-y divide-gray-100 focus:outline-none z-50">
           <div className="p-3 bg-gray-50/70 rounded-t-2xl">
             <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
               <UserCheck className="w-3.5 h-3.5 text-blue-600" />
@@ -53,7 +55,7 @@ export function UserSwitcher() {
           </div>
 
           <div className="p-1.5 space-y-1">
-            {users.map((user) => {
+            {users.map((user: any) => {
               const isSelected = user.id === currentUser.id;
               return (
                 <button
@@ -78,7 +80,7 @@ export function UserSwitcher() {
                     <div>
                       <div className="text-xs font-semibold text-gray-900">{user.name}</div>
                       <div className="text-[11px] text-gray-500">{user.email}</div>
-                      <span className="inline-block mt-0.5 text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.2 rounded font-normal">
+                      <span className="inline-block mt-0.5 text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded font-normal">
                         {user.roleDescription}
                       </span>
                     </div>
@@ -88,9 +90,22 @@ export function UserSwitcher() {
               );
             })}
           </div>
+
+          {/* Logout */}
+          <div className="p-1.5">
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                logout();
+              }}
+              className="w-full flex items-center gap-2.5 p-2.5 rounded-xl text-sm text-red-600 hover:bg-red-50 transition-all font-medium"
+            >
+              <LogOut className="w-4 h-4" />
+              Log out
+            </button>
+          </div>
         </div>
       )}
     </div>
   );
 }
-

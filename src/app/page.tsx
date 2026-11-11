@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 
 export default function DashboardPage() {
-  const { currentUser, showToast } = useUser();
+  const { currentUser, showToast } = useUser() as any;
   const [documents, setDocuments] = useState<Document[]>([]);
   const [filter, setFilter] = useState<DocumentFilter>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,6 +32,7 @@ export default function DashboardPage() {
   const [sharingDoc, setSharingDoc] = useState<Document | null>(null);
 
   const fetchDocuments = async () => {
+    if (!currentUser) return;
     setIsLoading(true);
     try {
       const res = await fetch(`/api/documents?userId=${currentUser.id}&filter=${filter}`);
@@ -64,13 +65,13 @@ export default function DashboardPage() {
 
   useEffect(() => {
     fetchDocuments();
-  }, [currentUser.id, filter]);
+  }, [currentUser?.id, filter]);
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this document?')) return;
 
     try {
-      const res = await fetch(`/api/documents/${id}?userId=${currentUser.id}`, {
+      const res = await fetch(`/api/documents/${id}?userId=${currentUser?.id}`, {
         method: 'DELETE',
       });
       const data = await res.json();

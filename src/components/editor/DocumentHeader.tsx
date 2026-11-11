@@ -35,7 +35,7 @@ export function DocumentHeader({
   onOpenShare,
   onOpenAttachments,
 }: DocumentHeaderProps) {
-  const { currentUser } = useUser();
+  const { currentUser } = useUser() as any;
   const [title, setTitle] = useState(document.title);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
 

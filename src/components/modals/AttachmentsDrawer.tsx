@@ -30,7 +30,7 @@ export function AttachmentsDrawer({
   onDocumentUpdated,
   userRole,
 }: AttachmentsDrawerProps) {
-  const { currentUser, showToast } = useUser();
+  const { currentUser, showToast } = useUser() as any;
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 

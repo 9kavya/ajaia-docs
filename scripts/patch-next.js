@@ -14,3 +14,4 @@ if (fs.existsSync(target)) {
     console.log('[patch-next] Successfully applied Windows OneDrive readlink patch to Next.js');
   }
 }
+

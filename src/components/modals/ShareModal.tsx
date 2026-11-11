@@ -29,7 +29,7 @@ export function ShareModal({
   onDocumentUpdated,
   userRole,
 }: ShareModalProps) {
-  const { currentUser, users, showToast } = useUser();
+  const { currentUser, users, showToast } = useUser() as any;
   const [targetEmail, setTargetEmail] = useState('');
   const [selectedRole, setSelectedRole] = useState<'editor' | 'viewer'>('editor');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -188,8 +188,8 @@ export function ShareModal({
                 <span className="text-[11px] font-medium text-gray-400 mr-2">Quick Add:</span>
                 <div className="inline-flex flex-wrap gap-1.5 mt-1">
                   {users
-                    .filter((u) => u.email !== document.ownerEmail)
-                    .map((user) => {
+                    .filter((u: any) => u.email !== document.ownerEmail)
+                    .map((user: any) => {
                       const isAlreadyCollab = document.collaborators.some(
                         (c) => c.email.toLowerCase() === user.email.toLowerCase()
                       );

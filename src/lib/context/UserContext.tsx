@@ -25,7 +25,32 @@ export const CLIENT_SEEDED_USERS: User[] = [
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
     roleDescription: 'Design Lead',
   },
+  {
+    id: 'usr_kavya',
+    name: 'Kavya Reddy',
+    email: 'kavya@ajaia.io',
+    avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=150&auto=format&fit=crop&q=80',
+    roleDescription: 'Content Strategist',
+  },
 ];
+
+// Simulated credentials stored in localStorage key: ajaia_credentials
+// Format: { [userId]: { email, password } }
+const DEFAULT_CREDENTIALS: Record<string, { email: string; password: string }> = {
+  usr_alex:   { email: 'alex@ajaia.io',   password: 'alex123'   },
+  usr_sarah:  { email: 'sarah@ajaia.io',  password: 'sarah123'  },
+  usr_marcus: { email: 'marcus@ajaia.io', password: 'marcus123' },
+  usr_kavya:  { email: 'kavya@ajaia.io',  password: 'kavya123'  },
+};
+
+function getStoredCredentials(): Record<string, { email: string; password: string }> {
+  if (typeof window === 'undefined') return DEFAULT_CREDENTIALS;
+  try {
+    const raw = localStorage.getItem('ajaia_credentials');
+    if (raw) return { ...DEFAULT_CREDENTIALS, ...JSON.parse(raw) };
+  } catch {}
+  return DEFAULT_CREDENTIALS;
+}
 
 interface ToastMessage {
   id: string;
@@ -34,8 +59,11 @@ interface ToastMessage {
 }
 
 interface UserContextType {
-  currentUser: User;
+  currentUser: User | null;
+  isLoggedIn: boolean;
   users: User[];
+  login: (email: string, password: string) => boolean;
+  logout: () => void;
   switchUser: (userId: string) => void;
   toasts: ToastMessage[];
   showToast: (message: string, type?: 'success' | 'error' | 'info') => void;
@@ -45,23 +73,55 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
-  const [currentUser, setCurrentUser] = useState<User>(CLIENT_SEEDED_USERS[0]);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
+  // Restore session from localStorage on mount
   useEffect(() => {
     const savedUserId = localStorage.getItem('ajaia_active_user_id');
-    if (savedUserId) {
+    const savedSession = localStorage.getItem('ajaia_session_active');
+    if (savedUserId && savedSession === 'true') {
       const found = CLIENT_SEEDED_USERS.find((u) => u.id === savedUserId);
-      if (found) setCurrentUser(found);
+      if (found) {
+        setCurrentUser(found);
+        setIsLoggedIn(true);
+      }
     }
   }, []);
+
+  const login = (email: string, password: string): boolean => {
+    const creds = getStoredCredentials();
+    const matched = CLIENT_SEEDED_USERS.find((u) => {
+      const c = creds[u.id];
+      return c && c.email === email.trim().toLowerCase() && c.password === password;
+    });
+    if (matched) {
+      setCurrentUser(matched);
+      setIsLoggedIn(true);
+      localStorage.setItem('ajaia_active_user_id', matched.id);
+      localStorage.setItem('ajaia_session_active', 'true');
+      showToast(`Welcome back, ${matched.name}!`, 'success');
+      return true;
+    }
+    return false;
+  };
+
+  const logout = () => {
+    setCurrentUser(null);
+    setIsLoggedIn(false);
+    localStorage.removeItem('ajaia_active_user_id');
+    localStorage.setItem('ajaia_session_active', 'false');
+    showToast('Logged out successfully.', 'info');
+  };
 
   const switchUser = (userId: string) => {
     const found = CLIENT_SEEDED_USERS.find((u) => u.id === userId);
     if (found) {
       setCurrentUser(found);
       localStorage.setItem('ajaia_active_user_id', found.id);
-      showToast(`Switched active persona to ${found.name} (${found.roleDescription})`, 'info');
+      localStorage.setItem('ajaia_session_active', 'true');
+      showToast(`Switched to ${found.name} (${found.roleDescription})`, 'info');
     }
   };
 
@@ -81,7 +141,10 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     <UserContext.Provider
       value={{
         currentUser,
+        isLoggedIn,
         users: CLIENT_SEEDED_USERS,
+        login,
+        logout,
         switchUser,
         toasts,
         showToast,

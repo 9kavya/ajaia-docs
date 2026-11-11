@@ -22,7 +22,7 @@ interface DocumentCardProps {
 }
 
 export function DocumentCard({ document, onDelete, onShare }: DocumentCardProps) {
-  const { currentUser } = useUser();
+  const { currentUser } = useUser() as any;
   const isOwner = document.ownerId === currentUser.id;
   const userCollab = document.collaborators.find((c) => c.userId === currentUser.id);
   const userRole = isOwner ? 'owner' : userCollab ? userCollab.role : 'none';

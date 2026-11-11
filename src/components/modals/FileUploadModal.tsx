@@ -20,7 +20,7 @@ interface FileUploadModalProps {
 
 export function FileUploadModal({ isOpen, onClose }: FileUploadModalProps) {
   const router = useRouter();
-  const { currentUser, showToast } = useUser();
+  const { currentUser, showToast } = useUser() as any;
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);

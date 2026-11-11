@@ -46,7 +46,7 @@ const TEMPLATES = [
 
 export function TemplatesBar({ onOpenUpload }: TemplatesBarProps) {
   const router = useRouter();
-  const { currentUser, showToast } = useUser();
+  const { currentUser, showToast } = useUser() as any;
 
   const handleCreateFromTemplate = async (template: (typeof TEMPLATES)[0]) => {
     try {

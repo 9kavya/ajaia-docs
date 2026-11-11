@@ -25,7 +25,7 @@ interface DocumentEditorProps {
 }
 
 export function DocumentEditor({ initialDocument, initialRole }: DocumentEditorProps) {
-  const { currentUser, showToast } = useUser();
+  const { currentUser, showToast } = useUser() as any;
   const [document, setDocument] = useState<Document>(initialDocument);
   const [userRole, setUserRole] = useState<Role | 'none'>(initialRole);
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'unsaved'>('saved');
