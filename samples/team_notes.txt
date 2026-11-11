@@ -1,0 +1,12 @@
+Ajaia Sprint Retrospective Notes
+
+Attendees: Alex Rivera, Sarah Chen, Marcus Vance
+
+What went well:
+- Shipped the core TipTap document editor on schedule.
+- Multi-format file ingestion pipeline works cleanly across .md, .txt, and .docx files.
+- The persona switcher makes evaluating multi-user permissions seamless.
+
+What could be improved:
+- Add keyboard shortcut cheatsheet modal (Ctrl+/).
+- Add document export to PDF.

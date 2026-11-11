@@ -1,0 +1,40 @@
+{
+  "name": "ajaia-docs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "next": "14.2.15",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.4",
+    "lucide-react": "^0.454.0",
+    "@tiptap/react": "^2.9.1",
+    "@tiptap/pm": "^2.9.1",
+    "@tiptap/starter-kit": "^2.9.1",
+    "@tiptap/extension-underline": "^2.9.1",
+    "@tiptap/extension-placeholder": "^2.9.1",
+    "@tiptap/extension-text-align": "^2.9.1",
+    "@tiptap/extension-task-list": "^2.9.1",
+    "@tiptap/extension-task-item": "^2.9.1",
+    "@tiptap/extension-highlight": "^2.9.1",
+    "mammoth": "^1.8.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "@types/node": "^20.17.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "autoprefixer": "^10.4.20",
+    "vitest": "^2.1.3"
+  }
+}

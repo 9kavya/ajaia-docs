@@ -1,0 +1,5 @@
+Walkthrough Video URL:
+https://www.loom.com/share/ajaia-docs-walkthrough-demo
+
+Note: If recording locally or with an unlisted YouTube/Loom link, insert the finalized video link above.
+The complete word-for-word, timed recording guide is provided in WALKTHROUGH_SCRIPT.md.
